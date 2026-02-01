@@ -12,34 +12,34 @@
 
 <main>
 
-  <body class="bg-gray-50 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
+  <body class="min-h-screen bg-gray-50">
+    <div class="container px-4 py-8 mx-auto">
       <div class="justify-between mb-8">
-        <h1 class="text-3xl font-bold text-gray-800 text-center">Products List</h1>
-        <div class="text-center mt-4">
-          <a href="{{ route('product.create') }}" id="toggleFormBtn" class="add_product--btn border-xl rounded-xl bg-gray-200 p-2 px-4 hover:bg-gray-300 transition inline-block">
+        <h1 class="text-3xl font-bold text-center text-gray-800">Products List</h1>
+        <div class="mt-4 text-center">
+          <a href="{{ route('products.create')}}" id="toggleFormBtn" class="inline-block p-2 px-4 transition bg-gray-200 add_product--btn border-xl rounded-xl hover:bg-gray-300">
             Add Product
           </a>
         </div>
       </div>
 
             <!-- Products Table -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="overflow-hidden bg-white rounded-lg shadow-lg">
         <div class="overflow-x-auto">
           <table class="w-full border-collapse">
             <thead class="bg-gray-100 border-b-2 border-gray-200">
               <tr>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Product</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Reference</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Description</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Category</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Price</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Stock</th>
+                <th class="px-6 py-4 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">Product</th>
+                <th class="px-6 py-4 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">Reference</th>
+                <th class="px-6 py-4 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">Description</th>
+                <th class="px-6 py-4 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">Category</th>
+                <th class="px-6 py-4 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">Price</th>
+                <th class="px-6 py-4 text-sm font-semibold tracking-wider text-left text-gray-700 uppercase">Stock</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
               @foreach ($products as $product)
-              <tr class="hover:bg-gray-50 transition-colors duration-200">
+              <tr class="transition-colors duration-200 hover:bg-gray-50">
                 <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $product->name }}</td>
                 <td class="px-6 py-4 text-sm text-gray-600">{{ $product->reference }}</td>
                 <td class="px-6 py-4 text-sm text-gray-600">{{ $product->description ?? 'N/A' }}</td>
@@ -47,15 +47,15 @@
                 <td class="px-6 py-4 text-sm font-semibold text-green-600">${{ number_format($product->price, 2) }}</td>
                 <td class="px-6 py-4 text-sm">
                   @if($product->stock > 10)
-                  <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                  <span class="inline-flex px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
                     In Stock ({{ $product->stock }})
                   </span>
                   @elseif($product->stock > 0)
-                  <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                  <span class="inline-flex px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">
                     Low Stock ({{ $product->stock }})
                   </span>
                   @else
-                  <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                  <span class="inline-flex px-2 py-1 text-xs font-semibold text-red-800 bg-red-100 rounded-full">
                     Out of Stock
                   </span>
                   @endif
@@ -68,8 +68,8 @@
       </div>
 
       @if($products->isEmpty())
-      <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">No products found.</p>
+      <div class="py-12 text-center">
+        <p class="text-lg text-gray-500">No products found.</p>
       </div>
       @endif
     </div>

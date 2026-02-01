@@ -72,7 +72,7 @@
                             <i class="fas fa-cube mr-2 text-blue-500"></i>Product Name *
                         </label>
                         <div class="relative">
-                            <input type="text" id="product" name="product" required
+                            <input type="text" id="product" name="name" required
                                 class="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
                                 placeholder="Enter product name">
                             <div class="absolute left-3 top-3.5 text-gray-400">
