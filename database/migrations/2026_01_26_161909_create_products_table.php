@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('reference')->nullable();
             $table->text('description');
-            $table->decimal('prix',10,2);
+            $table->decimal('price',10,2);
             $table->unsignedInteger('stock');
             $table->foreignId('category_id')
-                  ->constrained('category')
+                  ->constrained('categories')
                   ->cascadeOnDelete();
             $table->timestamps();
         });
