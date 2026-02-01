@@ -37,6 +37,24 @@
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Categories Management</h1>
             <p class="text-gray-600 max-w-2xl mx-auto">Manage your product categories with this comprehensive system.</p>
         </div>
+            <!-- Success/Error Messages -->
+            @if(session('success'))
+                <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <p class="text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
+            @endif
+            
+            @if(session('error'))
+                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                        <p class="text-red-800">{{ session('error') }}</p>
+                    </div>
+                </div>
+            @endif
 
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <!-- Header -->
@@ -73,6 +91,9 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         <i class="fas fa-calendar mr-2"></i>Created At
                                     </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <i class="fas fa-cogs mr-2"></i>Actions
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -89,6 +110,23 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $category->created_at->format('M d, Y') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div class="flex space-x-2">
+
+                                                <a href="{{ route('category.edit', $category->id) }}" class="text-blue-600 hover:text-blue-800 transition-colors" title="Edit Category">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                
+                                                
+                                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-800 transition-colors" title="Delete Category" onclick="return confirm('Are you sure you want to delete this category?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

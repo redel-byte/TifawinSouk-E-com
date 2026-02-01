@@ -16,23 +16,23 @@
     <div class="container mx-auto px-4 py-8">
       <!-- Success/Error Messages -->
       @if(session('success'))
-        <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <div class="flex items-center">
-            <i class="fas fa-check-circle text-green-500 mr-2"></i>
-            <p class="text-green-800">{{ session('success') }}</p>
-          </div>
+      <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div class="flex items-center">
+          <i class="fas fa-check-circle text-green-500 mr-2"></i>
+          <p class="text-green-800">{{ session('success') }}</p>
         </div>
+      </div>
       @endif
-      
+
       @if(session('error'))
-        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <div class="flex items-center">
-            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-            <p class="text-red-800">{{ session('error') }}</p>
-          </div>
+      <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div class="flex items-center">
+          <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+          <p class="text-red-800">{{ session('error') }}</p>
         </div>
+      </div>
       @endif
-      
+
       <div class="justify-between mb-8">
         <h1 class="text-3xl font-bold text-gray-800 text-center">Products List</h1>
         <div class="text-center mt-4">
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-            <!-- Products Table -->
+      <!-- Products Table -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full border-collapse">
@@ -65,6 +65,18 @@
                 <td class="px-6 py-4 text-sm text-gray-600">{{ $product->category ? $product->category->name : 'No Category' }}</td>
                 <td class="px-6 py-4 text-sm font-semibold text-green-600">${{ number_format($product->price, 2) }}</td>
                 <td class="px-6 py-4 text-sm">
+                  <a href="{{ route('products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-800 transition-colors" title="Edit Category">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-600 hover:text-red-800 transition-colors" title="Delete Category" onclick="return confirm('Are you sure you want to delete this category?')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+
+
                   @if($product->stock > 10)
                   <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                     In Stock ({{ $product->stock }})
