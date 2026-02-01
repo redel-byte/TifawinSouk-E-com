@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -39,9 +40,19 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'category_id'=> 'required|exists:categories,id'
         ]);
-        Product::create($validateProducts);
         
-        return redirect()->route('products.index');
+        // Debug: Log the validated data
+        \Log::info('Validated product data:', $validateProducts);
+        
+        try {
+            $product = Product::create($validateProducts);
+            \Log::info('Product created successfully:', ['id' => $product->id]);
+            
+            return redirect()->route('products.index')->with('success', 'Product created successfully!');
+        } catch (\Exception $e) {
+            \Log::error('Error creating product:', ['error' => $e->getMessage()]);
+            return back()->withInput()->with('error', 'Error creating product: ' . $e->getMessage());
+        }
     }
 
     /**
