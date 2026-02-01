@@ -65,6 +65,40 @@
             <!-- Form -->
             <form id="productForm" class="p-6 md:p-8" method="POST" action="{{ route('products.store') }}">
                 @csrf
+                
+                <!-- Success/Error Messages -->
+                @if(session('success'))
+                    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <p class="text-green-800">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                @endif
+                
+                @if(session('error'))
+                    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                            <p class="text-red-800">{{ session('error') }}</p>
+                        </div>
+                    </div>
+                @endif
+                
+                <!-- Validation Errors -->
+                @if ($errors->any())
+                    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                            <h3 class="text-red-800 font-medium">Please fix the following errors:</h3>
+                        </div>
+                        <ul class="text-red-700 text-sm space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <!-- Product Name -->
                     <div>
@@ -143,11 +177,23 @@
                                 <i class="fas fa-layer-group"></i>
                             </div>
                         </div>
-                        <select name="category_id" id="category_id">
-                            @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option> 
-                            @endforeach
-                        </select>
+                    </div>
+
+                    <!-- Category -->
+                    <div>
+                        <label for="category_id" class="block text-gray-700 font-medium mb-2">
+                            <i class="fas fa-tags mr-2 text-indigo-500"></i>Category *
+                        </label>
+                        <div class="relative">
+                            <select name="category_id" id="category_id" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-indigo-500">
+                                <option value="">Select a category</option>
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option> 
+                                @endforeach
+                            </select>
+                        </div>
+                        <p class="text-gray-500 text-sm mt-2">Choose the appropriate category for this product</p>
                     </div>
                 </div>
 
