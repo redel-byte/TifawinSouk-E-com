@@ -20,7 +20,7 @@ class ProductFactory extends Factory
             'name' => fake()->word(),
             'reference' => fake()->word(),
             'description' => fake()->paragraph(),
-            'prix' => fake()->randomFloat(2,1,1000),
+            'price' => fake()->randomFloat(2,1,1000),
             'stock' => fake()->numberBetween(1,1000),
             'category_id' => \App\Models\Category::inRandomOrder()->first()->id ?? 1,
         ];
