@@ -34,8 +34,11 @@ class CategoryController extends Controller
             'description' => 'nullable|string'
         ]);
 
+        // Generate slug from name
+        $validatedData['slug'] = strtolower(str_replace(' ', '-', $validatedData['name']));
+
         Category::create($validatedData);
-        return redirect()->route('categories.index');
+        return redirect()->route('category.index')->with('success', 'Category created successfully!');
     }
 
     /**
@@ -51,7 +54,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -59,7 +62,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'description' => 'nullable|string'
+        ]);
+
+        // Generate slug from name
+        $validatedData['slug'] = strtolower(str_replace(' ', '-', $validatedData['name']));
+
+        $category->update($validatedData);
+        return redirect()->route('category.index')->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -67,6 +79,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            return redirect()->route('category.index')->with('success', 'Category deleted successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('category.index')->with('error', 'Error deleting category: ' . $e->getMessage());
+        }
     }
 }
